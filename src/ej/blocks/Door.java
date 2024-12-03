@@ -12,9 +12,8 @@ public class Door extends Block {
 
     public Door(final int length, final int width, final int height, final boolean locked)
             throws IllegalBlockException {
-        super(length, width, height);
+        super(length, width, height,Color.BLUE);
         this.locked = locked;
-        this.color = Color.BLUE;
     }
 
     public boolean isLocked() {

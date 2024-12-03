@@ -1,28 +1,31 @@
-package ej;
+package ej.kits;
 
-import ej.blocks.Door;
+
 import ej.blocks.IBlock;
-import ej.blocks.Wall;
 import ej.exceptions.IllegalBlockException;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-public class Kit {
+public class StarterKit {
 
     Set<IBlock> blocks = new LinkedHashSet<IBlock>();
     Set<String> keywords = new LinkedHashSet<String>();
 
-    public Kit() throws IllegalBlockException {
+    public Set<IBlock> getBlocks() {
+        return blocks;
+    }
 
-        blocks.add(new Wall(3, 2, 2, true));
-        blocks.add(new Wall(3, 2, 2, true));
-        blocks.add(new Wall(2, 1, 2, false));
-        blocks.add(new Wall(2, 1, 2, false));
-        blocks.add(new Door(1, 2, 2, true));
+    public Set<String> getKeywords() {
+        return keywords;
+    }
+
+    public StarterKit(final Set<IBlock> blocks) throws IllegalBlockException {
+        this.blocks.addAll(blocks);
 
         keywords.add("Cabin");
         keywords.add("Rampart");
+        keywords.add("House");
     }
 
     public void displayKit() {

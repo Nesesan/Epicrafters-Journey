@@ -9,9 +9,8 @@ public class Wall extends Block {
 
     public Wall(final int length, final int width, final int height, final boolean loadBearing)
             throws IllegalBlockException {
-        super(length, width, height);
+        super(length, width, height,Color.GREY);
         this.loadBearing = loadBearing;
-        this.color = Color.GREY;
     }
 
     public boolean isTraversable() {
