@@ -1,10 +1,11 @@
 package ej;
 
-public abstract class Block {
+public abstract class Block implements IBlock {
 
     protected int length;
     protected int width;
     protected int height;
+    protected Color color;
 
     public Block(final int length, final int width, final int height) {
         this.length = length;
@@ -22,4 +23,7 @@ public abstract class Block {
         return height;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
 }
