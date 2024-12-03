@@ -4,7 +4,8 @@ public class Wall extends Block {
 
     private boolean loadBearing;
 
-    public Wall(final int length, final int width, final int height, final boolean loadBearing) {
+    public Wall(final int length, final int width, final int height, final boolean loadBearing)
+            throws IllegalBlockException {
         super(length, width, height);
         this.loadBearing = loadBearing;
         this.color = Color.GREY;
