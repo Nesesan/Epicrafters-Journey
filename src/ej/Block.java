@@ -1,10 +1,10 @@
 package ej;
 
-public class Block {
+public abstract class Block {
 
-    private int length;
-    private int width;
-    private int height;
+    protected int length;
+    protected int width;
+    protected int height;
 
     public Block(final int length, final int width, final int height) {
         this.length = length;
