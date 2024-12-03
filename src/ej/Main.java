@@ -10,10 +10,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.concurrent.*;
+
 
 public class Main {
 
@@ -45,13 +44,13 @@ public class Main {
                 // Displays to the user the number of blocks per type contained in the Kit.
                 System.out.println("Here is the number of blocks of each type contained in the Starter Kit:");
                 Map<Type, Integer> blockQuantity = new TreeMap<>(); // TreeMap sorts entries alphabetically by key.
-                kit.getBlocks().forEach((block)->{
+                kit.getBlocks().forEach((block) -> {
                     Type type = Type.valueOf(block.getClass().getSimpleName().toUpperCase());
                     int quantity = blockQuantity.getOrDefault(type, 0) + 1; // Existing quantity + 1.
                     blockQuantity.put(type, quantity);
                 });
                 Set<Type> types = blockQuantity.keySet();
-                types.forEach((type)->{
+                types.forEach((type) -> {
                     System.out.println(type.toString() + " " + blockQuantity.get(type));
                 });
             } else {
@@ -69,21 +68,38 @@ public class Main {
     private static Set<IBlock> constructBlockSet() throws IllegalBlockException {
         Set<IBlock> blocks = new LinkedHashSet<>();
 
-        // The kit contains 4 Wall blocks.
-        blocks.add(new Wall(3, 2, 2, true));
-        blocks.add(new Wall(3, 2, 2, true));
-        blocks.add(new Wall(2, 1, 2, false));
-        blocks.add(new Wall(2, 1, 2, false));
+        ExecutorService executorservice = Executors.newVirtualThreadPerTaskExecutor();
 
-        // The kit contains 1 Door block.
-        blocks.add(new Door(1, 2, 2, true));
+        Callable<IBlock> taskWall1 = () -> {
+            return new Wall(3, 2, 2, true);
+        };
+        Callable<IBlock> taskWall2 = () -> {
+            return new Wall(2, 1, 2, false);
+        };
+        Callable<IBlock> taskDoor = () -> {
+            return new Door(1, 2, 2, true);
+        };
+        Callable<IBlock> taskRoof = () -> {
+            return new Roof(3, 1, 1);
+        };
 
-        // The kit contains 4 Roof blocks.
-        blocks.add(new Roof(3, 1, 1));
-        blocks.add(new Roof(3, 1, 1));
-        blocks.add(new Roof(3, 1, 1));
-        blocks.add(new Roof(3, 1, 1));
+        List<Callable<IBlock>> tasks = Arrays.asList(taskWall1, taskWall1, taskWall2, taskWall2, taskDoor, taskRoof);
 
+        try {
+
+            List<Future<IBlock>> results = executorservice.invokeAll(tasks);
+            results.forEach((result) -> {
+                try {
+                    blocks.add(result.get());
+                } catch (InterruptedException | ExecutionException e) {
+                    logger.error("Error during the creation of parallel blocks");
+                }
+            });
+        } catch (InterruptedException e) {
+            logger.error("Error during the creation of parallel blocks");
+        }
+        executorservice.shutdown();
         return blocks;
     }
 }
+
