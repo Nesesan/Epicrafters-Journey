@@ -1,6 +1,8 @@
-import ej.Door;
-import ej.IllegalBlockException;
-import ej.LockedDoorException;
+package ej;
+
+import ej.blocks.Door;
+import ej.exceptions.IllegalBlockException;
+import ej.exceptions.LockedDoorException;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,6 +1,9 @@
-package ej;
+package ej.blocks;
+
+import ej.exceptions.IllegalBlockException;
 
 public class Wall extends Block {
+
 
     private boolean loadBearing;
 

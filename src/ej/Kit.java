@@ -1,5 +1,10 @@
 package ej;
 
+import ej.blocks.Door;
+import ej.blocks.IBlock;
+import ej.blocks.Wall;
+import ej.exceptions.IllegalBlockException;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 

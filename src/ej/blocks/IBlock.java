@@ -1,4 +1,4 @@
-package ej;
+package ej.blocks;
 
 public interface IBlock {
 

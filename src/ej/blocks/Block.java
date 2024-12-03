@@ -1,6 +1,12 @@
-package ej;
+package ej.blocks;
+
+import ej.exceptions.IllegalBlockException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public abstract class Block implements IBlock {
+
+    Logger logger = LogManager.getLogger(Block.class);
 
     protected int length;
     protected int width;
@@ -10,11 +16,14 @@ public abstract class Block implements IBlock {
     public Block(final int length, final int width, final int height)
             throws IllegalBlockException {
         if (length < MIN_LENGTH || width < MIN_WIDTH || height < MIN_HEIGHT) {
+            logger.error("The minimum values for length, width, and height have not been met");
             throw new IllegalBlockException();
         }
         this.length = length;
         this.width = width;
         this.height = height;
+
+        logger.info("A block of type " + this.getClass().getSimpleName() + " has been constructed.");
     }
 
     public int getLength() {
