@@ -1,5 +1,8 @@
+import ej.Kit;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Welcome to Epicrafter's journey");
+        Kit starterKit = new Kit();
+        starterKit.displayKit();
     }
 }
