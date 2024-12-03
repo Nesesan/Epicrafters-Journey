@@ -5,6 +5,8 @@ import ej.exceptions.LockedDoorException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.function.Predicate;
+
 public class Door extends Block {
 
     Logger logger = LogManager.getLogger(Door.class);
@@ -26,6 +28,14 @@ public class Door extends Block {
         } else {
             logger.error("Door is already locked");
             throw new LockedDoorException();
+        }
+    }
+    public void forcelock(Predicate<String> function){
+        String secretKey = "#secret123";
+        if (this.locked) {
+            if (function.test(secretKey)) {
+                locked = false;
+            }
         }
     }
 }

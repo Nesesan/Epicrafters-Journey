@@ -40,22 +40,20 @@ public class Main {
                 // Displays keywords associated with the Kit to provide ideas to the user.
                 System.out.println("Here are some construction ideas with the Starter Kit:");
                 Set<String> keywords = kit.getKeywords();
-                for (String keyword : keywords) {
-                    System.out.println(keyword);
-                }
+                keywords.forEach(System.out::println);
             } else if (response.equals("2")) {
                 // Displays to the user the number of blocks per type contained in the Kit.
                 System.out.println("Here is the number of blocks of each type contained in the Starter Kit:");
                 Map<Type, Integer> blockQuantity = new TreeMap<>(); // TreeMap sorts entries alphabetically by key.
-                for (IBlock block : kit.getBlocks()) {
+                kit.getBlocks().forEach((block)->{
                     Type type = Type.valueOf(block.getClass().getSimpleName().toUpperCase());
                     int quantity = blockQuantity.getOrDefault(type, 0) + 1; // Existing quantity + 1.
                     blockQuantity.put(type, quantity);
-                }
+                });
                 Set<Type> types = blockQuantity.keySet();
-                for (Type type : types) {
+                types.forEach((type)->{
                     System.out.println(type.toString() + " " + blockQuantity.get(type));
-                }
+                });
             } else {
                 System.out.println("The entered value is invalid - type 1 or 2.");
             }
